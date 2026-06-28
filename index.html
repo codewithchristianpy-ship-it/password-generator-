@@ -132,7 +132,6 @@
 
         .generate-btn:hover { transform: translateY(-2px); }
 
-        /* NEW FEATURE: History Box CSS Layout */
         .history-container {
             background-color: var(--card-bg);
             border: 1px solid var(--border);
@@ -181,7 +180,6 @@
             padding-right: 5px;
         }
 
-        /* Styling scrollbar for smooth history window */
         .history-list::-webkit-scrollbar { width: 6px; }
         .history-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
 
@@ -229,7 +227,6 @@
 <body>
 
     <div class="main-wrapper">
-        <!-- Generator Unit -->
         <div class="container">
             <h2>Password Generator</h2>
             
@@ -276,7 +273,6 @@
             <button class="generate-btn" id="generate-btn">Generate Password 🚀</button>
         </div>
 
-        <!-- NEW FEATURE: Interactive Password Tracking Logs -->
         <div class="history-container">
             <div class="history-header">
                 <h3>📜 Password History</h3>
@@ -312,14 +308,18 @@
             symbol: '!@#$%^&*()_+~`|}{[]\:;?><,./-='
         };
 
-        // Cache storage memory tracking system array
         let generatedHistory = JSON.parse(localStorage.getItem('saved_passwords')) || [];
 
-        // Dynamic Label Updater
         lengthSlider.addEventListener('input', () => {
             lengthVal.textContent = lengthSlider.value;
         });
 
+        // FIXED LOGIC ROUTE: Safe array parsing blocks system runtime crash when selectors are empty
         function generatePassword() {
             let pool = '';
+            
+            if (uppercaseCheck.checked) pool += chars.upper;
+            if (lowercaseCheck.checked) pool += chars.lower;
+            if (numbersCheck.checked) pool += chars.number;
+
             
